@@ -36,6 +36,7 @@ export default function LoginPage() {
     password,
     redirect:false,
   })
+  console.log("SIGNIN RESULT:", result);
   if (result?.error){
     setPasswordError("Invalid Email or Password");
     return
