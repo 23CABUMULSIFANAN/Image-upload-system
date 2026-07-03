@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PRODUCT_OWNER
+  ADMIN
+  USER
+}
+enum PaymentStatus{
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model Organisation {
+  id        String   @id @default(uuid())
+  name      String
+  logoUrl   String?
+  address   String?
+  phone     String?
+  
+  createdAt DateTime @default(now())
+
+  
+  subscription String @default("FREE")
+  users     User[]
+  images    Image[]
+  payments  Payment[]
+  notifications  Notification[]
+}
+
+model User {
+  id             String        @id @default(uuid())
+  name           String
+  email          String        @unique
+  password       String
+  role           Role          @default(USER)
+  
+
+  imageQuota     Int           @default(5)
+  createdAt      DateTime      @default(now())
+
+
+  organizationId String
+  organization   Organisation  @relation(fields: [organizationId], references: [id])
+  image Image[]  @relation("UploadedImages")
+    sentNotifications  Notification[] @relation("SentNotifications")
+  payments Payment[]
+ 
+
+}
+
+model Image{
+  id             String       @id @default(uuid())
+  imageUrl       String
+  fileName       String 
+  description    String?
+  tags           String[]    @default([])
+  createdAt      DateTime    @default(now())
+  uploadedById     String
+  uploadedBy User @relation("UploadedImages",fields:[uploadedById],references:[id])
+organizationId String
+  organization Organisation @relation(fields:[organizationId],references:[id])
+
+  notifications Notification[]
+
+}
+
+model Payment{
+  id                  String   @id @default(uuid())
+  amount              Int
+  slotsPurchased       Int
+  transactionId       String @unique
+  status              PaymentStatus  @default(PENDING)
+  createdAt           DateTime        @default(now())
+
+  userId              String
+  user User   @relation(fields:[userId],references:[id])
+
+  organizationId     String
+  organization       Organisation    @relation(fields:[organizationId],references:[id])
+
+
+}
+
+model Notification{
+  id        String  @id @default(uuid())
+  message   String
+  receiverIds  String[] @default([])
+  createdAt    DateTime  @default(now())
+
+  senderId    String
+  sender User @relation("SentNotifications",fields:[senderId],references:[id])
+
+  imageId String
+  image Image  @relation(fields:[imageId],references:[id])
+
+  organizationId String
+  organization Organisation @relation(fields:[organizationId],references:[id])
+
+}
