@@ -1,5 +1,5 @@
-import bcrypt from "bcryptjs";
-const bcrypt = require("bcrypt");
-bcrypt.hash("ownerpassword", 10).then((hash) => {
-  process.stdout.write(hash);
+const bcrypt = require("bcryptjs");
+
+bcrypt.hash("owner123", 10).then((hash) => {
+  console.log(hash);
 });

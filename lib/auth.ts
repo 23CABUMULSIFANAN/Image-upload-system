@@ -12,38 +12,41 @@ export const authOptions: NextAuthOptions = {
         password: {},
       },
 
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
+   async authorize(credentials) {
+  try {
+    console.log("EMAIL:", credentials?.email);
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email as string,
-          },
-        });
-        console.log("USER FOUND:user")
-
-        if (!user) return null;
-
-        const isMatch = await bcrypt.compare(
-          credentials.password as string,
-          user.password
-        );
-console.log("PASSWORD MATCH",isMatch);
-console.log("DB PASSWORD LENGTH:", user.password.length);
-console.log("DB PASSWORD:", JSON.stringify(user.password));
-console.log("ENTERED PASSWORD:", JSON.stringify(credentials.password));
-        if (!isMatch) return null;
-
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          organizationId: user.organizationId,
-        };
+    const user = await prisma.user.findUnique({
+      where: {
+        email: credentials!.email,
       },
+    });
+
+    console.log("USER:", user);
+
+    if (!user) return null;
+
+    const match = await bcrypt.compare(
+      credentials!.password,
+      user.password
+    );
+
+    console.log("MATCH:", match);
+
+    if (!match) return null;
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      organizationId: user.organizationId,
+    };
+  } catch (e) {
+    console.error("AUTH ERROR:", e);
+    throw e;
+  }
+}
     }),
   ],
 

@@ -31,12 +31,14 @@ export default function LoginPage() {
     setPasswordError("Password is required")
     return
   }
-  const result  =await signIn("credentials",{
-    email,
-    password,
-    redirect:false,
-  })
-  console.log("SIGNIN RESULT:", result);
+  const result = await signIn("credentials", {
+  email,
+  password,
+  redirect: false,
+});
+
+console.log(result);
+
   if (result?.error){
     setPasswordError("Invalid Email or Password");
     return
