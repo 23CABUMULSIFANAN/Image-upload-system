@@ -43,20 +43,8 @@ console.log(result);
     setPasswordError("Invalid Email or Password");
     return
   }
-  const session=await getSession();
- if(!session || !session.user) return;
-
-  switch(session.user.role){
-    case "ADMIN":
-      router.push("/admin/dashboard/")
-      break;
-    case "USER":
-      router.push("/user/dashboard/")
-      break;
-    case "PRODUCT_OWNER":
-      router.push("/product-owner/dashboard")
-  }
-  
+router.push("/redirect");
+router.refresh();
   
   setEmail("")
   setPassword("")
