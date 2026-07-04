@@ -22,7 +22,6 @@ export const authOptions: NextAuthOptions = {
       },
     });
 
-    console.log("USER:", user);
 
     if (!user) return null;
 
@@ -49,6 +48,9 @@ export const authOptions: NextAuthOptions = {
 }
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
 
   session: {
     strategy: "jwt",
