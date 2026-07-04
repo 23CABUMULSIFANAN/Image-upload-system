@@ -79,7 +79,7 @@ export default async function AdminPage() {
         {/* Quick actions */}
         <div>
           <h2 className="text-lg font-semibold text-slate-700 mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
             <Link href="/admin/users">
               <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
                 <CardHeader>
@@ -106,6 +106,15 @@ export default async function AdminPage() {
                 </CardHeader>
               </Card>
             </Link>
+
+            <Link href="/profile">
+  <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+    <CardHeader>
+      <CardTitle className="text-base">Profile</CardTitle>
+      <CardDescription>View your account and organisation details</CardDescription>
+    </CardHeader>
+  </Card>
+</Link>
           </div>
         </div>
       </div>

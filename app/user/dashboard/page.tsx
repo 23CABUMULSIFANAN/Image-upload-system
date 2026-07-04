@@ -94,7 +94,7 @@ export default function UserDashboard() {
 
         <div>
           <h2 className="text-lg font-semibold text-slate-700 mb-4">Quick Links</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
             <Link href="/gallery">
               <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
                 <CardHeader>
@@ -121,6 +121,15 @@ export default function UserDashboard() {
                 </CardHeader>
               </Card>
             </Link>
+
+            <Link href="/profile">
+  <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+    <CardHeader>
+      <CardTitle className="text-base">Profile</CardTitle>
+      <CardDescription>View your account details</CardDescription>
+    </CardHeader>
+  </Card>
+</Link>
           </div>
         </div>
       </div>
